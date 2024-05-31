@@ -1,0 +1,25 @@
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.io.BufferedOutputStream;
+public class Downloader {
+
+    public static void main(String[] args) throws IOException {
+        String mediaUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg";
+        URL url = new URL(mediaUrl);
+        URLConnection connection = url.openConnection();
+        BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
+        FileOutputStream out = new FileOutputStream("downloaded.jpg");
+        BufferedOutputStream buf = new BufferedOutputStream(out);
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = in.read(buffer)) > 0) {
+            buf.write(buffer, 0, len);
+        }
+        in.close();
+        buf.close();
+        System.out.println("Медиафайл успешно загружен!");
+    }
+}
