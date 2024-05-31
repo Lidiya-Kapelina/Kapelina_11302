@@ -21,10 +21,11 @@ class VectorCode {
         for (int i = 0; i < length; i += 1) {
             if (list.head.next.data == i + 1) {
                 array[i] = list.head.data;
+                list.head = list.head.next.next;
             } else {
                 array[i] = 0;
             }
-            list.head = list.head.next.next;
+            
 
         }
         return array;
