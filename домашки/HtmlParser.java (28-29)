@@ -1,0 +1,51 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class HtmlParser {
+
+    public static void main(String[] args) throws IOException {
+        String htmlUrl = "https://cs1.htmlacademy.ru/content/blog/1331/index.html";
+
+        //получаем дерево
+        Document doc = Jsoup.connect(htmlUrl).get();
+        //  System.out.println(doc);
+        Elements sections = doc.select("h2");
+        Elements links = doc.select("a");
+        Elements paragraphs = doc.select("p");
+        System.out.println(doc.select("h1").text());
+        System.out.println("   " + paragraphs.get(0).text());
+        System.out.println("Ссылки:");
+        for (Element link : links) {
+            String linkText = link.text();
+            String linkUrl = link.attr("href");
+            System.out.println(linkText + " (" + linkUrl + ")");
+        }
+        System.out.println(sections.get(0).text());
+        for (int i = 1; i < 3; i += 1) {
+            System.out.println("   " + paragraphs.get(i).text());
+        }
+        ;
+        System.out.println(sections.get(1).text());
+        System.out.println("   " + paragraphs.get(3).text());
+        System.out.println(sections.get(2).text());
+        for (int i = 4; i < 6; i += 1) {
+            System.out.println("   " + paragraphs.get(i).text());
+        }
+        ;
+
+        FileWriter writer = new FileWriter("example.txt");
+        for (Element paragraph : paragraphs) {
+            writer.write(paragraph.text() + "\n");
+
+
+        }
+        writer.close();
+
+    }
+
+
+}
